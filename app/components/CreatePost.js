@@ -17,7 +17,7 @@ function CreatePost(props) {
       // Redirect to new post url
       // props.addFlashMessage("Congrats, you successfuly created a post.")
       
-      addFlashMessage("Congrats, you successfuly created a post.")
+      addFlashMessage("Congrats, you successfuly created a post !")
       navigate(`/post/${response.data}`)
       console.log("New post was created.")
     } catch (e) {
