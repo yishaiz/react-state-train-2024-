@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useContext } from 'react';
 import Axios from 'axios';
+import ExampleContext from '../ExampleContext';
 
 function HeaderLoggedOut(props) {
   const { setLoggedIn } = useContext(ExampleContext);
