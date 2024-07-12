@@ -2,7 +2,7 @@ import React, { useEffect, useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Page from './Page';
 import Axios from 'axios';
-import ExampleContext from '../ExampleContext';
+import DispatchContext from '../DispatchContext';
 
 function CreatePost(props) {
   const [title, setTitle] = useState();
@@ -10,7 +10,8 @@ function CreatePost(props) {
   const navigate = useNavigate();
 // const addFlashMessage = useContext(ExampleContext)
 
-const { addFlashMessage } = useContext(ExampleContext);
+// const { addFlashMessage } = useContext(ExampleContext);
+const appDispatch = useContext(DispatchContext);
 
   async function handleSubmit(e) {
     e.preventDefault();
@@ -23,7 +24,10 @@ const { addFlashMessage } = useContext(ExampleContext);
       // Redirect to new post url
       // props.addFlashMessage("Congrats, you successfuly created a post.")
 
-      addFlashMessage('Congrats, you successfuly created a post !');
+      // addFlashMessage('Congrats, you successfuly created a post !');
+
+      appDispatch({ type: 'flashMessage', value: 'Congrats, you created a new post !'});
+
       navigate(`/post/${response.data}`);
       console.log('New post was created.');
     } catch (e) {
