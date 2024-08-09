@@ -1,5 +1,7 @@
-import React, { useState, useReducer } from 'react';
+// import React, { useState, useReducer } from 'react';
 import ReactDOM from 'react-dom/client';
+import { useImmerReducer } from 'use-immer';
+
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Axios from 'axios';
 Axios.defaults.baseURL = 'http://localhost:8080';
@@ -24,25 +26,32 @@ function Main() {
     flashMessages: [],
   };
 
-  function ourReducer(state, action) {
+  // function ourReducer(state, action) {
+
+  function ourReducer(draft, action) {
     switch (action.type) {
       case 'login': {
-        return { loggedIn: true, flashMessages: state.flashMessages };
-        // return { ...state, loggedIn: true };
+        // return { loggedIn: true, flashMessages: state.flashMessages };
+        draft.loggedIn = true;
       }
       case 'logout': {
-        return { loggedIn: false, flashMessages: state.flashMessages };
+        draft.loggedIn = false;
+        // return { loggedIn: false, flashMessages: state.flashMessages };
       }
-      case 'flashMessage': {
-        return {
-          loggedIn: state.loggedIn,
-          flashMessages: state.flashMessages.concat(action.value),
-        };
+    case 'flashMessage': {
+      return {
+        loggedIn: state.loggedIn,
+        flashMessages: state.flashMessages.concat(action.value),
+      };
+
+        draft.flashMessages.push(action.value);
       }
     }
   }
 
-  const [state, dispatch] = useReducer(ourReducer, initialState);
+  // const [state, dispatch] = useReducer(ourReducer, initialState);
+
+  const [state, dispatch] = useImmerReducer(ourReducer, initialState);
 
   function addFlashMessage(msg) {
     setFlashMessages((prev) => prev.concat(msg));
@@ -61,7 +70,10 @@ function Main() {
 
           <Header />
           <Routes>
-            <Route path="/" element={state.loggedIn ? <Home /> : <HomeGuest />} />
+            <Route
+              path="/"
+              element={state.loggedIn ? <Home /> : <HomeGuest />}
+            />
             <Route path="/post/:id" element={<ViewSinglePost />} />
             <Route path="/create-post" element={<CreatePost />} />
             <Route path="/about-us" element={<About />} />
