@@ -31,20 +31,16 @@ function Main() {
   function ourReducer(draft, action) {
     switch (action.type) {
       case 'login': {
-        // return { loggedIn: true, flashMessages: state.flashMessages };
         draft.loggedIn = true;
+        return;
       }
       case 'logout': {
         draft.loggedIn = false;
-        // return { loggedIn: false, flashMessages: state.flashMessages };
+        return;
       }
-    case 'flashMessage': {
-      return {
-        loggedIn: state.loggedIn,
-        flashMessages: state.flashMessages.concat(action.value),
-      };
-
-        draft.flashMessages.push(action.value);
+      case 'flashMessage': {
+       draft.flashMessages.push(action.value);
+       return;
       }
     }
   }
